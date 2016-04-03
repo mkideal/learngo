@@ -35,6 +35,8 @@ var _ = learngo.Register("04_func", func() {
 			fmt.Printf("parse template %s error: %v\n", name, err)
 			continue
 		}
-		t.Execute(os.Stdout, nil)
+		if err := t.Execute(os.Stdout, nil); err != nil {
+			fmt.Printf("Execute %q error: %v\n", text, err)
+		}
 	}
 })
