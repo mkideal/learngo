@@ -1,4 +1,4 @@
-# 开发环境的搭建
+# 安装
 
 ```go
 package main
@@ -6,8 +6,8 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Print("开发环境的搭建")
+	fmt.Print("Install go")
 }
 // output:
-// 开发环境的搭建
+// Install go
 ```
