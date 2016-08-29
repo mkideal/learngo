@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"github.com/mkideal/gostart/tools/share"
+	_ "github.com/mkideal/learngo/tools/share"
 )
 
 var (

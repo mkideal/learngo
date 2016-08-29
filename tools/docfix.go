@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mkideal/gostart/tools/share"
+	"github.com/mkideal/learngo/tools/share"
 	"github.com/mkideal/log"
 )
 
