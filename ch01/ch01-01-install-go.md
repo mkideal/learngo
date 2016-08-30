@@ -1,5 +1,8 @@
 # 安装
 
+[**上一级**](./ch01.md)
+[**下一节**](./ch01-02-development-environment.md)
+
 ## 下载
 
 Go 是跨平台的语言，各个系统平台下的安装也非常简单。首先从Go官方下载安装包，不过墙内的朋友需要翻墙才能进入Go官方网站。但是也有别的镜像地址可用
@@ -71,5 +74,5 @@ go run main.go
 
 > 由于 Windows 下的命令行和 Unix 的终端有差异，为避免每次需要敲命令时都繁琐的特别区分，以后统一使用 `命令行` 一词。另外，Go 作为主要应用于服务器的语言，强烈建议大家在 Linux 或 Mac 下进行 Go 开发。目前不能摆脱 Windows 的可以考虑安装一个 Linux 发行版的虚拟机，在学习 Go 之余可以花点时间熟悉 Linux 系统，这里推荐使用 `Linux Mint` 这个发行版本
 
-[上一级](./ch01.md)
-[下一节](./ch01-02-development-environment.md)
+[**上一级**](./ch01.md)
+[**下一节**](./ch01-02-development-environment.md)
