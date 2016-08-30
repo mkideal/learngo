@@ -87,6 +87,8 @@ func (code Code) Run() (output string, err error) {
 	if err != nil {
 		return
 	}
+	defer tmpFile.Close()
+	defer os.Remove(tmpFilename)
 	if _, err = tmpFile.Write(code.Content); err != nil {
 		return
 	}
