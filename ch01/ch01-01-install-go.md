@@ -52,7 +52,7 @@ export GOPATH=/path/to/workspace
 在 helloworld 下我们建立一个名为 main.go 的文件，文件内容如下：
 
 ```go
-// index:ch01-01-01
+// index:ch01-01
 package main
 
 import "fmt"
@@ -75,6 +75,11 @@ go run main.go
 如果可以看到 `hello,world` 的输出，那么说明你已经安装成功了。
 
 > 由于 Windows 下的命令行和 Unix 的终端有差异，为避免每次需要敲命令时都繁琐的特别区分，以后统一使用 `命令行` 一词。另外，Go 作为主要应用于服务器的语言，强烈建议大家在 Linux 或 Mac 下进行 Go 开发。目前不能摆脱 Windows 的可以考虑安装一个 Linux 发行版的虚拟机，在学习 Go 之余可以花点时间熟悉 Linux 系统，这里推荐使用 `Linux Mint` 这个发行版本
+
+
+## 安装过程出了问题？
+
+安装过程中遇到问题可以发邮件 [i@mkideal.com](mailto:i@mkideal.com)
 
 ---
 [**章目录**](./ch01.md)
