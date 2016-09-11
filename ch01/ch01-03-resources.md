@@ -17,8 +17,8 @@ Go 相关的资源
 
 ## 工具集
 
-* [Go Playground: 在线执行Go代码(需要翻墙)](https://play.golang.org)
-* [Runoob 在线执行Go代码(不需要翻墙)](http://c.runoob.com/compile/21)
+* [Go Playground: 在线执行Go代码(墙外)](https://play.golang.org)
+* [Runoob 在线执行Go代码(墙内)](http://c.runoob.com/compile/21)
 * [Vim-go: vim 的 go 插件](https://github.com/fatih/vim-go)
 
 ## 开源收集
