@@ -6,9 +6,5 @@ Golang 宝典
 
 这本教程既适合已有其它编程语言基础的人，也适合编程0基础的人（当然计算机基础还是要有一点的）
 
-* [第一章：准备工作](./ch01/ch01.md)
-	- [安装 go](./ch01/ch01-01-install-go.md)
-	- [开发环境的搭建](./ch01/ch01-02-development-environment.md)
-	- [Go 相关的资源](./ch01/ch01-03-resources.md)
-* [第二章：语言基础](./ch02/ch02.md)
-	- [编程杂谈]() <./ch02/ch02-01-programming-gossip.md>
+[//]: #(@doc_of_book:begin)
+[//]: #(@doc_of_book:end)

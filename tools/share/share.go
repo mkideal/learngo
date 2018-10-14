@@ -146,9 +146,12 @@ func parseChapterFromDirname(dirname string) (chapter int, ok bool) {
 	return 0, false
 }
 
-var sectionFilenameRegexp = regexp.MustCompile("^ch[0-9]{2}-([0-9]{2})-.*\\.md$")
+var sectionFilenameRegexp = regexp.MustCompile("^([0-9]{2})-.*\\.md$")
 
 func parseSectionFromFilename(filename string) (section int, ok bool) {
+	if filename == "README.md" {
+		return 0, true
+	}
 	ret := sectionFilenameRegexp.FindStringSubmatch(filename)
 	if len(ret) == 2 {
 		sectionId, err := strconv.Atoi(ret[1])
