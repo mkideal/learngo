@@ -25,6 +25,8 @@ var (
 
 	ErrChapterOutOfRange = errors.New("chapter out of range: must be in interval [1,99]")
 	ErrSectionOutOfRange = errors.New("section out of range: must be in interval [1,99]")
+
+	README = "README.md"
 )
 
 func init() {
@@ -71,19 +73,18 @@ func ChapterDir(chapter int) string {
 	return filepath.Join(RootDir(), ChapterName(chapter))
 }
 
-func ChapterTOCFilepath(chapter int) string {
+func ChapterFilepath(chapter int) string {
 	chapterName := ChapterName(chapter)
-	return filepath.Join(RootDir(), chapterName, chapterName+".md")
+	return filepath.Join(RootDir(), chapterName, README)
 }
 
 func SectionFilenamePrefix(chapter, section int) string {
-	chapterName := ChapterName(chapter)
-	return fmt.Sprintf("%s-%2d-", chapterName, section)
+	return fmt.Sprintf("%2d-", section)
 }
 
 func SectionFilepath(chapter, section int, sectionName string) string {
 	chapterName := ChapterName(chapter)
-	return filepath.Join(RootDir(), chapterName, fmt.Sprintf("%s-%2d-%s.md", chapterName, section, sectionName))
+	return filepath.Join(RootDir(), chapterName, fmt.Sprintf("%2d-%s.md", section, sectionName))
 }
 
 func ChapterExist(chapter int) bool {
@@ -93,9 +94,9 @@ func ChapterExist(chapter int) bool {
 
 func SectionExist(chapter, section int) bool {
 	chapterName := ChapterName(chapter)
-	pattner := filepath.Join(RootDir(), chapterName, fmt.Sprintf("%s-%2d-*.md", chapterName, section))
-	filepath.Glob(pattner)
-	return false
+	pattner := filepath.Join(RootDir(), chapterName, fmt.Sprintf("-%2d-*.md", section))
+	matchs, err := filepath.Glob(pattner)
+	return err == nil && len(matchs) > 0
 }
 
 func CreateChapter(chapter int) (exist bool, err error) {
@@ -149,7 +150,7 @@ func parseChapterFromDirname(dirname string) (chapter int, ok bool) {
 var sectionFilenameRegexp = regexp.MustCompile("^([0-9]{2})-.*\\.md$")
 
 func parseSectionFromFilename(filename string) (section int, ok bool) {
-	if filename == "README.md" {
+	if filename == README {
 		return 0, true
 	}
 	ret := sectionFilenameRegexp.FindStringSubmatch(filename)

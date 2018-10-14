@@ -64,7 +64,7 @@ type Code struct {
 	Filename  string
 	StartLine int
 	EndLine   int
-	Content   []byte
+	Content   []byte `json:"-"`
 	Runnable  bool
 	Output    string
 }

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-go run ./tools/docfix.go
+go run ./tools/docfix.go $@

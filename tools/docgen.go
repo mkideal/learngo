@@ -15,8 +15,7 @@ func main() {
 	log.SetLevel(share.LogLevel())
 
 	book := share.Parse(share.Chapters()...)
-	log.WithJSON(book).Debug("book")
-	err := book.Run()
+	err := book.Rewrite()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 	}

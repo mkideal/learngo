@@ -1,4 +1,5 @@
-第二章：语言基础
+2 语言基础
 ================
 
-[//]: # (@toc_of_current_chapter)
+[//]: #(@toc_of_chapter:begin)
+[//]: #(@toc_of_chapter:end)

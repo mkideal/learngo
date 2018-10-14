@@ -53,7 +53,6 @@ export GOPATH=/path/to/workspace
 在 helloworld 下我们建立一个名为 main.go 的文件，文件内容如下：
 
 ```go
-// index:ch01-01
 package main
 
 import "fmt"

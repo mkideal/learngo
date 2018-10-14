@@ -3,7 +3,7 @@ package share
 import (
 	"bufio"
 	"bytes"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -16,14 +16,21 @@ type parser struct {
 
 func (p *parser) parseFile(filename string) File {
 	file := File{
-		Name:     filepath.Base(filename),
-		Fullpath: filename,
+		Filename: filename,
 	}
-	content, err := ioutil.ReadFile(filename)
+	fin, err := os.Open(filename)
 	if err != nil {
 		return file
 	}
-	file.Content = content
+	defer fin.Close()
+	if stat, err := fin.Stat(); err == nil && stat != nil {
+		file.Mode = stat.Mode()
+	} else {
+		file.Mode = 0666
+	}
+
+	// TODO: scan file content to parse title and blocks(TextBlock, CodeBlock, ReplBlock)
+	var content []byte
 
 	reader := bufio.NewReader(bytes.NewBuffer(content))
 	// scan file
@@ -117,22 +124,18 @@ func (p *parser) parseFile(filename string) File {
 func Parse(chapters ...int) Book {
 	log.Debug("Parse: chapters=%v", chapters)
 	p := new(parser)
-	p.book.Fullpath = *flRootdir
+	p.book.File = p.parseFile(filepath.Join(*flRootdir, README))
 	for _, chapter := range chapters {
-		dir := ChapterDir(chapter)
 		ch := Chapter{
-			Id:       chapter,
-			Name:     ChapterName(chapter),
-			TOCFile:  p.parseFile(ChapterTOCFilepath(chapter)),
-			Fullpath: dir,
+			Id:   chapter,
+			File: p.parseFile(ChapterFilepath(chapter)),
 		}
 		sections, names := Sections(chapter)
+		dir := ChapterDir(chapter)
 		for i, section := range sections {
 			ch.Sections = append(ch.Sections, Section{
-				Id:          section,
-				Name:        names[i],
-				Prefix:      SectionFilenamePrefix(chapter, section),
-				SectionFile: p.parseFile(filepath.Join(dir, names[i])),
+				Id:   section,
+				File: p.parseFile(filepath.Join(dir, names[i])),
 			})
 		}
 		p.book.Chapters = append(p.book.Chapters, ch)

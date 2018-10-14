@@ -1,22 +1,22 @@
 package share
 
-//------
-// File
-//------
-
-type File struct {
-	Name     string
-	Fullpath string
-	Content  []byte
-	CodeList []Code
+type Context struct {
+	Book    *Book
+	Chapter *Chapter
+	Section *Section
 }
 
-func (file File) Run(errList *ErrorList) {
-	for _, code := range file.CodeList {
-		if _, err := code.Run(); err != nil {
-			errList.Push(err)
-		}
-	}
+func (context *Context) WithBook(book *Book) *Context {
+	context.Book = book
+	return context
+}
+func (context *Context) WithChapter(chapter *Chapter) *Context {
+	context.Chapter = chapter
+	return context
+}
+func (context *Context) WithSection(section *Section) *Context {
+	context.Section = section
+	return context
 }
 
 //---------
@@ -24,15 +24,16 @@ func (file File) Run(errList *ErrorList) {
 //---------
 
 type Section struct {
-	Id          int
-	Name        string
-	Title       string
-	Prefix      string
-	SectionFile File
+	Id   int
+	File File
 }
 
 func (section Section) Run(errList *ErrorList) {
-	section.SectionFile.Run(errList)
+	section.File.Run(errList)
+}
+
+func (section *Section) Rewrite(context Context) error {
+	return section.File.Rewrite(*context.WithSection(section))
 }
 
 //---------
@@ -41,17 +42,28 @@ func (section Section) Run(errList *ErrorList) {
 
 type Chapter struct {
 	Id       int
-	Name     string
-	Fullpath string
-	TOCFile  File
+	File     File
 	Sections []Section
 }
 
 func (chapter Chapter) Run(errList *ErrorList) {
-	chapter.TOCFile.Run(errList)
+	chapter.File.Run(errList)
 	for _, sec := range chapter.Sections {
 		sec.Run(errList)
 	}
+}
+
+func (chapter *Chapter) Rewrite(context Context) error {
+	context.WithChapter(chapter)
+	if err := chapter.File.Rewrite(context); err != nil {
+		return err
+	}
+	for i := 0; i < len(chapter.Sections); i++ {
+		if err := chapter.Sections[i].Rewrite(context); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 //------
@@ -59,7 +71,7 @@ func (chapter Chapter) Run(errList *ErrorList) {
 //------
 
 type Book struct {
-	Fullpath string
+	File     File
 	Chapters []Chapter
 }
 
@@ -69,4 +81,18 @@ func (book Book) Run() error {
 		ch.Run(errList)
 	}
 	return errList.Done()
+}
+
+func (book *Book) Rewrite() error {
+	var context Context
+	context.WithBook(book)
+	if err := book.File.Rewrite(context); err != nil {
+		return err
+	}
+	for i := 0; i < len(book.Chapters); i++ {
+		if err := book.Chapters[i].Rewrite(context); err != nil {
+			return err
+		}
+	}
+	return nil
 }
